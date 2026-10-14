@@ -141,6 +141,11 @@ norecursedirs = [".git", "testing_config", ".hypothesis"]
 # sync/teardown paths surface as an unbounded wait rather than a failure, and
 # without this they reach CI as a job timeout with no test named.
 timeout = 60
+filterwarnings = [
+  # Hypothesis warns about its own PRNG, which it keeps in thread-local storage
+  # that gc.get_referrers() does not see: a false positive, nothing of ours.
+  "ignore:It looks like `register_random` was passed:hypothesis.errors.HypothesisWarning",
+]
 
 [tool.mypy]
 ignore_missing_imports = true
